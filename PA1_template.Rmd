@@ -42,7 +42,7 @@ act<-read.csv("activity.csv")
 
 ## What is mean total number of steps taken per day?
 In this part, we have to take a histogram of total number of steps by days and we have to calculate the mean and median of total number of steps on each day. To this, first we group the data frame **act** by **date**. Then we compute the **total steps** on each day. Using **total_steps**, which is a *tbl_df* object with 2 columns (the *date* and the *total*, which is the total number of steps on the given day), we can take the histogram.
-```{r hist, echo=TRUE}
+```{r Histogram_total, echo=TRUE}
 act <- tbl_df(act) %>% group_by(date)
 
 total_steps<-summarize(act,total=sum(steps,na.rm=TRUE))
@@ -55,17 +55,10 @@ hist(total_steps$total,10,col="blue",
              main="Histogram of total steps by days",
              xlab="total steps",
              ylab="Frequency")
-
-#png("file=./figure/Histogram_total.png")
-#hist(total_steps$total,10,col="blue",
-#             main="Histogram of total steps by days",
-#             xlab="total steps",
-#             ylab="Frequency")
-#dev.off()
 ```
 
 Now, we compute the **median_steps** and the **mean_steps**. The variables **median_steps** and **mean-steps** have a class of tbl_df. They have 2 columns: **date** and **MED/MEAN**, respectively. Using the **MED** and **MEAN** columns, we create the barplots.
-```{r median-mean, echo=TRUE}
+```{r Median-and-Mean_dayly, echo=TRUE}
 median_steps <- summarize(act,MED=median(steps,na.rm=TRUE))
 
 mean_steps <- summarize(act,MEAN=mean(steps,na.rm=TRUE))
@@ -74,28 +67,16 @@ barplot(median_steps$MED, col="blue",
         main="Median of steps by day",
         ylab="median")
 
-#png("file=./figure/Median_dayly.png")
-#barplot(median_steps$MED, col="blue",
-#        main="Median of steps by day",
-#        ylab="median")
-#dev.off()
-
 
 barplot(mean_steps$MEAN, col="blue",
         main="Mean of steps by day",
         ylab="mean")
-
-#png("file=./figure/Mean_dayly.png")
-#barplot(mean_steps$MEAN, col="blue",
-#        main="Mean of steps by day",
-#        ylab="mean")
-#dev.off()
 ```
 
 
 ## What is the average daily activity pattern?
 We have to regroup our dataset by the variable **interval**. In the variable **mean_steps_ts** we compute the mean of steps averaged on the 5-minutes interval. That is, the *k*-th row of **mean_steps_ts** contains the mean of the *k*-th 5-minutes intervals. 
-```{r create-df, echo=TRUE}
+```{r Timeseries, echo=TRUE}
 act_ts<-ungroup(act) %>% tbl_df %>% group_by(interval)
 mean_steps_ts <- summarize(act_ts,MEAN_ts=mean(steps,na.rm=TRUE))
 int_ts <- unique(act_ts$interval)
@@ -104,13 +85,6 @@ plot(int_ts,mean_steps_ts$MEAN_ts,type="l", col="blue",
                       main="Time series of the means",
                       xlab="Interval",
                       ylab="Mean of steps")
-
-#png("file=./figure/Timeseries.png")
-#plot(int_ts,mean_steps_ts$MEAN_ts,type="l", col="blue",
-#                      main="Time series of the means",
-#                      xlab="Interval",
-#                      ylab="Mean of steps")
-#dev.off()
 ```
 
 Now, we describe the interval, when the number of average steps was the highest.
@@ -147,7 +121,7 @@ sum(!complete.cases(act_without_NA))
 ```
 
 Histogram of the total number of steps taken each day.
-```{r hist-2, echo=TRUE}
+```{r Histogram_old-new, echo=TRUE}
 total_steps_new<-summarize(act_without_NA,total_new=sum(steps,na.rm=TRUE))
 
 par(mfrow=c(1,2))
@@ -159,22 +133,10 @@ hist(total_steps_new$total_new,10,col="green",
              main="Histogram new",
              xlab="total steps",
              ylab="Frequency")
-
-#png("file=./figure/Histogram_old-new.png")
-#par(mfrow=c(1,2))
-#hist(total_steps$total,10,col="blue",
-#             main="Histogram old",
-#             xlab="total steps",
-#             ylab="Frequency")
-#hist(total_steps_new$total_new,10,col="green",
-#             main="Histogram new",
-#             xlab="total steps",
-#             ylab="Frequency")
-#dev.off()
 ```
 
 The median and the mean.
-```{r median-mean-2, echo=TRUE}
+```{r Median-Mean_old-new, echo=TRUE}
 median_steps_new <- summarize(act_without_NA,MED_new=median(steps,na.rm=TRUE))
 mean_steps_new <- summarize(act_without_NA,MEAN_new=mean(steps,na.rm=TRUE))
 
@@ -186,16 +148,6 @@ barplot(median_steps_new$MED_new, col="green",
         main="Median new",
         ylab="median")
 
-#png("file=./figure/Median_old-new.png")
-#par(mfrow=c(1,2))
-#barplot(median_steps$MED, col="blue",
-#        main="Median old",
-#        ylab="median")
-#barplot(median_steps_new$MED_new, col="green",
-#        main="Median new",
-#        ylab="median")
-#dev.off()
-
 
 par(mfrow=c(1,2))
 barplot(mean_steps$MEAN, col="blue",
@@ -204,16 +156,6 @@ barplot(mean_steps$MEAN, col="blue",
 barplot(mean_steps_new$MEAN_new, col="green",
         main="Mean new",
         ylab="mean")
-
-#png("file=./figure/Mean_old-new.png")
-#par(mfrow=c(1,2))
-#barplot(mean_steps$MEAN, col="blue",
-#        main="Mean old",
-#        ylab="mean")
-#barplot(mean_steps_new$MEAN_new, col="green",
-#        main="Mean new",
-#        ylab="mean")
-#dev.off()
 ```
 
 
@@ -222,7 +164,7 @@ In the first part of the exercise we have in the variables **median_steps** and 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 We create a new vriable called **date_day**. This contain the hungarian names of the days. The **weekday** variable gives that the given day is *weekday* or *weekend*. We group the dataset by **interval** and **weekday**. After **summarize** we can plot the groups.
-```{r weekday, echo=TRUE}
+```{r Mean_weekday-weekend, echo=TRUE}
 act_without_NA<-ungroup(act_without_NA) %>% tbl_df
 date <- as.Date(act_without_NA$date,"%Y-%m-%d")
 date_day<-as.factor(weekdays(date))
@@ -242,14 +184,6 @@ xyplot(mean_wd_wend ~ interval | weekday, data=mean_wd, type="l",
        main="mean steps on weekdays and weekends",
        xlab="interval",
        ylab="mean of steps")
-
-#png("file=./figure/weekday-weekend.png")
-#xyplot(mean_wd_wend ~ interval | weekday, data=mean_wd, type="l",
-#       col="green",
-#       main="mean steps on weekdays and weekends",
-#       xlab="interval",
-#       ylab="mean of steps")
-#dev.off()
 ```
 
 

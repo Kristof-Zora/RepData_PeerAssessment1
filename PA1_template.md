@@ -147,16 +147,7 @@ hist(total_steps$total,10,col="blue",
              ylab="Frequency")
 ```
 
-![](PA1_template_files/figure-html/hist-1.png)<!-- -->
-
-```r
-#png("file=./figure/Histogram_total.png")
-#hist(total_steps$total,10,col="blue",
-#             main="Histogram of total steps by days",
-#             xlab="total steps",
-#             ylab="Frequency")
-#dev.off()
-```
+![](PA1_template_files/figure-html/Histogram_total-1.png)<!-- -->
 
 Now, we compute the **median_steps** and the **mean_steps**. The variables **median_steps** and **mean-steps** have a class of tbl_df. They have 2 columns: **date** and **MED/MEAN**, respectively. Using the **MED** and **MEAN** columns, we create the barplots.
 
@@ -170,30 +161,15 @@ barplot(median_steps$MED, col="blue",
         ylab="median")
 ```
 
-![](PA1_template_files/figure-html/median-mean-1.png)<!-- -->
+![](PA1_template_files/figure-html/Median-and-Mean_dayly-1.png)<!-- -->
 
 ```r
-#png("file=./figure/Median_dayly.png")
-#barplot(median_steps$MED, col="blue",
-#        main="Median of steps by day",
-#        ylab="median")
-#dev.off()
-
-
 barplot(mean_steps$MEAN, col="blue",
         main="Mean of steps by day",
         ylab="mean")
 ```
 
-![](PA1_template_files/figure-html/median-mean-2.png)<!-- -->
-
-```r
-#png("file=./figure/Mean_dayly.png")
-#barplot(mean_steps$MEAN, col="blue",
-#        main="Mean of steps by day",
-#        ylab="mean")
-#dev.off()
-```
+![](PA1_template_files/figure-html/Median-and-Mean_dayly-2.png)<!-- -->
 
 
 ## What is the average daily activity pattern?
@@ -210,16 +186,7 @@ plot(int_ts,mean_steps_ts$MEAN_ts,type="l", col="blue",
                       ylab="Mean of steps")
 ```
 
-![](PA1_template_files/figure-html/create-df-1.png)<!-- -->
-
-```r
-#png("file=./figure/Timeseries.png")
-#plot(int_ts,mean_steps_ts$MEAN_ts,type="l", col="blue",
-#                      main="Time series of the means",
-#                      xlab="Interval",
-#                      ylab="Mean of steps")
-#dev.off()
-```
+![](PA1_template_files/figure-html/Timeseries-1.png)<!-- -->
 
 Now, we describe the interval, when the number of average steps was the highest.
 
@@ -312,21 +279,7 @@ hist(total_steps_new$total_new,10,col="green",
              ylab="Frequency")
 ```
 
-![](PA1_template_files/figure-html/hist-2-1.png)<!-- -->
-
-```r
-#png("file=./figure/Histogram_old-new.png")
-#par(mfrow=c(1,2))
-#hist(total_steps$total,10,col="blue",
-#             main="Histogram old",
-#             xlab="total steps",
-#             ylab="Frequency")
-#hist(total_steps_new$total_new,10,col="green",
-#             main="Histogram new",
-#             xlab="total steps",
-#             ylab="Frequency")
-#dev.off()
-```
+![](PA1_template_files/figure-html/Histogram_old-new-1.png)<!-- -->
 
 The median and the mean.
 
@@ -343,20 +296,9 @@ barplot(median_steps_new$MED_new, col="green",
         ylab="median")
 ```
 
-![](PA1_template_files/figure-html/median-mean-2-1.png)<!-- -->
+![](PA1_template_files/figure-html/Median-Mean_old-new-1.png)<!-- -->
 
 ```r
-#png("file=./figure/Median_old-new.png")
-#par(mfrow=c(1,2))
-#barplot(median_steps$MED, col="blue",
-#        main="Median old",
-#        ylab="median")
-#barplot(median_steps_new$MED_new, col="green",
-#        main="Median new",
-#        ylab="median")
-#dev.off()
-
-
 par(mfrow=c(1,2))
 barplot(mean_steps$MEAN, col="blue",
         main="Mean old",
@@ -366,19 +308,7 @@ barplot(mean_steps_new$MEAN_new, col="green",
         ylab="mean")
 ```
 
-![](PA1_template_files/figure-html/median-mean-2-2.png)<!-- -->
-
-```r
-#png("file=./figure/Mean_old-new.png")
-#par(mfrow=c(1,2))
-#barplot(mean_steps$MEAN, col="blue",
-#        main="Mean old",
-#        ylab="mean")
-#barplot(mean_steps_new$MEAN_new, col="green",
-#        main="Mean new",
-#        ylab="mean")
-#dev.off()
-```
+![](PA1_template_files/figure-html/Median-Mean_old-new-2.png)<!-- -->
 
 
 In the first part of the exercise we have in the variables **median_steps** and **mean_steps** *NA* values. During the plot, thanks to to the parameter *na.rm=TRUE* these were omitted. In the second part, we changed the *NA* values of the **steps** variable by the *mean* value of the steps. Thera appeared in the **Median new** and **Mean new** plots.
@@ -428,17 +358,7 @@ xyplot(mean_wd_wend ~ interval | weekday, data=mean_wd, type="l",
        ylab="mean of steps")
 ```
 
-![](PA1_template_files/figure-html/weekday-1.png)<!-- -->
-
-```r
-#png("file=./figure/weekday-weekend.png")
-#xyplot(mean_wd_wend ~ interval | weekday, data=mean_wd, type="l",
-#       col="green",
-#       main="mean steps on weekdays and weekends",
-#       xlab="interval",
-#       ylab="mean of steps")
-#dev.off()
-```
+![](PA1_template_files/figure-html/Mean_weekday-weekend-1.png)<!-- -->
 
 
 We can see from the figures that the activitiy has different pattern in weekdays and in the weekend.
